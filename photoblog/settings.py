@@ -53,10 +53,19 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'photoblog.urls'
 
+import os
+
+if os.path.isdir(os.path.join(BASE_DIR, 'templates')):
+    print(f'ok_chemin________________________: {os.path.join(BASE_DIR, 'templates/')}')
+else:
+    print(f'________________________: {os.path.join(BASE_DIR, 'templates')}')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR.joinpath('templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,19 +75,23 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+        
     },
 ]
 
 WSGI_APPLICATION = 'photoblog.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'photoblog',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',  # ou l'adresse de votre serveur MySQL
+        'PORT': '3306',
     }
 }
 
@@ -105,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 
@@ -125,3 +138,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authentication.User'
+
+LOGIN_URL = 'login'
